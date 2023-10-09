@@ -1,33 +1,35 @@
-import { Routes, Navigate, Route } from "react-router-dom";
-import Nav from "./components/Nav";
-import PostsPage from "./pages/PostsPage";
-import CreatePage from "./pages/CreatePage";
-import UpdatePage from "./pages/UpdatePage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Loader from "./components/Loader";
-import { useState } from "react";
+import Nav from "./components/Nav";
+import CreatePage from "./pages/CreatePage";
+import FavoritesPage from "./pages/FavoritesPage";
+import PostsPage from "./pages/PostsPage";
+import ProfilePage from "./pages/ProfilePage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import ProfilePage from "./pages/ProfilePage";
-import FavoritesPage from "./pages/FavoritesPage";
+import UpdatePage from "./pages/UpdatePage";
 
 function App() {
     const [showLoader, setShowLoader] = useState(true); // default value of the loader is true (loader displayed)
     const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // default value comes from localStorage
 
-    const auth = getAuth();
-
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            //user is authenticated / signed in
-            setIsAuth(true); // set isAuth to true
-            localStorage.setItem("isAuth", true); // also, save isAuth in localStorage
-        } else {
-            // user is not authenticated / not signed in
-            setIsAuth(false); // set isAuth to false
-            localStorage.removeItem("isAuth"); // remove isAuth from localStorage
-        }
-    });
+    useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                //user is authenticated / signed in
+                console.log(user);
+                setIsAuth(true); // set isAuth to true
+                localStorage.setItem("isAuth", true); // also, save isAuth in localStorage
+            } else {
+                // user is not authenticated / not signed in
+                setIsAuth(false); // set isAuth to false
+                localStorage.removeItem("isAuth"); // remove isAuth from localStorage
+            }
+        });
+    }, []);
 
     // variable holding all private routes including the nav bar
     const privateRoutes = (

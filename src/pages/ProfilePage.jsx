@@ -21,6 +21,7 @@ export default function ProfilePage({ showLoader }) {
                 // get more info about the user from users collection
                 const docRef = doc(usersRef, auth.currentUser.uid); // use auth users uid to get user data from users collection
                 const userData = (await getDoc(docRef)).data();
+                console.log(userData);
                 if (userData) {
                     // if userData exists set states with values from userData (data from firestore)
                     setName(userData.name);
@@ -40,6 +41,7 @@ export default function ProfilePage({ showLoader }) {
 
         const userToUpdate = { name: name, title: title, image: image }; // create an object to hold the user to update properties
         console.log(userToUpdate);
+        console.log(auth.currentUser.uid);
         const docRef = doc(usersRef, auth.currentUser.uid); // create reference to the user in firestore
         await updateDoc(docRef, userToUpdate); // set/update the user in firestore with the values from userToUpdate/values from input fields
         showLoader(false);
@@ -75,20 +77,49 @@ export default function ProfilePage({ showLoader }) {
             <form onSubmit={handleSubmit}>
                 <label>
                     Name
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} name="name" placeholder="Type name" />
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        name="name"
+                        placeholder="Type name"
+                    />
                 </label>
                 <label>
                     Email
-                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} name="email" placeholder="Type email" disabled />
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        name="email"
+                        placeholder="Type email"
+                        disabled
+                    />
                 </label>
                 <label>
                     Title
-                    <input type="text" value={title} onChange={e => setTitle(e.target.value)} name="title" placeholder="Type your title" />
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        name="title"
+                        placeholder="Type your title"
+                    />
                 </label>
                 <label>
                     Image
-                    <input type="file" className="file-input" accept="image/*" onChange={handleImageChange} />
-                    <img className="image-preview" src={image} alt="Choose" onError={event => (event.target.src = imgPlaceholder)} />
+                    <input
+                        type="file"
+                        className="file-input"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                    />
+                    <img
+                        className="image-preview"
+                        src={image}
+                        alt="Choose"
+                        onError={event => (event.target.src = imgPlaceholder)}
+                    />
                 </label>
                 <p className="text-error">{errorMessage}</p>
                 <button>Save User</button>

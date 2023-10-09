@@ -3,12 +3,12 @@ import { getFirestore, collection } from "firebase/firestore";
 
 // firebaseConfig object copied from project in Firebase Console
 const firebaseConfig = {
-    apiKey: "AIzaSyBAOu3NqaUza7vzDQli9dYRaUHwLZldiWw",
-    authDomain: "race-react-firebase.firebaseapp.com",
-    projectId: "race-react-firebase",
-    storageBucket: "race-react-firebase.appspot.com",
-    messagingSenderId: "2118672388",
-    appId: "1:2118672388:web:06a1d58d898e9702581551"
+    apiKey: "AIzaSyBgjTep383GcPB_9wjl5-CkpKas6_g1gaA",
+    authDomain: "race-post-app.firebaseapp.com",
+    projectId: "race-post-app",
+    storageBucket: "race-post-app.appspot.com",
+    messagingSenderId: "15104463620",
+    appId: "1:15104463620:web:1ab034b7a6cab7c3ba3651"
 };
 const firebaseApp = initializeApp(firebaseConfig);
 export const db = getFirestore(firebaseApp);
