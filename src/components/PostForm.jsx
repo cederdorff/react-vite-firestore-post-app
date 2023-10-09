@@ -10,7 +10,7 @@ export default function PostForm({ savePost, post }) {
         if (post) {
             // if post, set the states with values from the post object.
             // The post object is a prop, passed from UpdatePage
-            setCaption(post.title);
+            setCaption(post.caption);
             setImage(post.image);
         }
     }, [post]); // useEffect is called every time post changes.

@@ -52,8 +52,7 @@ export default function PostCard({ post }) {
             <div onClick={handleClick}>
                 <UserAvatar uid={post.uid} />
                 <img src={post.image} alt={post.title} />
-                <h2>{post.title}</h2>
-                <p>{post.body}</p>
+                <h3>{post.caption}</h3>
             </div>
             {user.favorites?.includes(post.id) ? (
                 <button className="light" onClick={handleRemoveFromFav}>
