@@ -7,7 +7,7 @@ export default function PostForm({ savePost, post }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        if (post.caption && post.image) {
+        if (post?.caption && post?.image) {
             // if post, set the states with values from the post object.
             // The post object is a prop, passed from UpdatePage
             setCaption(post.caption);
