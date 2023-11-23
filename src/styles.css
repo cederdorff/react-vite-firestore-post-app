@@ -13,16 +13,16 @@ body {
     color: var(--text-color-dark);
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas,
+        "Courier New", monospace;
 }
 
 main {
@@ -227,13 +227,14 @@ input {
 }
 
 .image-preview {
-    width: 100%;
-    max-width: 350px;
+    width: calc(100% - 4px);
+    max-width: 346px;
     height: 200px;
     object-fit: cover;
-    margin: 1em auto;
+    margin: 0.5em auto;
     display: block;
     cursor: pointer;
+    border: solid 2px var(--green);
 }
 
 form .file-input {
