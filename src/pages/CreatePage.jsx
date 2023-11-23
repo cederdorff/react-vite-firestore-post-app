@@ -1,4 +1,4 @@
-import { addDoc, serverTimestamp } from "@firebase/firestore";
+import { addDoc, serverTimestamp } from "firebase/firestore";
 import { useEffect } from "react";
 import { postsRef } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ export default function CreatePage({ showLoader }) {
         showLoader(false);
     }, [showLoader]);
 
-    async function handleSubmit(newPost) {
+    async function createPost(newPost) {
         showLoader(true); // show the loader
         newPost.createdAt = serverTimestamp(); // timestamp (now)
         newPost.uid = auth.currentUser.uid; // uid of auth user / signed in user
@@ -26,7 +26,7 @@ export default function CreatePage({ showLoader }) {
     return (
         <section className="page">
             <h1>Create Page</h1>
-            <PostForm savePost={handleSubmit} />
+            <PostForm savePost={createPost} />
         </section>
     );
 }

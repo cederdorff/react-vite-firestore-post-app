@@ -1,4 +1,9 @@
-import { doc, getDoc, updateDoc, deleteDoc } from "@firebase/firestore";
+import {
+    doc,
+    getDoc,
+    updateDoc,
+    deleteDoc
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PostForm from "../components/PostForm";

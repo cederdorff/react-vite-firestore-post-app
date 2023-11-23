@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { usersRef } from "../firebase-config";
-import { doc, getDoc, updateDoc } from "@firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import imgPlaceholder from "../assets/img/img-placeholder.jpg";
 
 export default function ProfilePage({ showLoader }) {
@@ -39,7 +39,11 @@ export default function ProfilePage({ showLoader }) {
         event.preventDefault();
         showLoader(true);
 
-        const userToUpdate = { name: name, title: title, image: image }; // create an object to hold the user to update properties
+        const userToUpdate = {
+            name: name,
+            title: title,
+            image: image
+        }; // create an object to hold the user to update properties
         console.log(userToUpdate);
         console.log(auth.currentUser.uid);
         const docRef = doc(usersRef, auth.currentUser.uid); // create reference to the user in firestore
@@ -118,7 +122,9 @@ export default function ProfilePage({ showLoader }) {
                         className="image-preview"
                         src={image}
                         alt="Choose"
-                        onError={event => (event.target.src = imgPlaceholder)}
+                        onError={event =>
+                            (event.target.src = imgPlaceholder)
+                        }
                     />
                 </label>
                 <p className="text-error">{errorMessage}</p>
