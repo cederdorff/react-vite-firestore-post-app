@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import imgPlaceholder from "../assets/img/img-placeholder.jpg";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase-config";
 
 export default function PostForm({ savePost, post }) {
     const [caption, setCaption] = useState("");
     const [image, setImage] = useState("");
+    const [imageFile, setImageFile] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
@@ -23,6 +26,7 @@ export default function PostForm({ savePost, post }) {
         const file = event.target.files[0];
         if (file.size < 500000) {
             // image file size must be below 0,5MB
+            setImageFile(file); // set the imageFile state with the file object
             const reader = new FileReader();
             reader.onload = event => {
                 setImage(event.target.result);
@@ -35,12 +39,12 @@ export default function PostForm({ savePost, post }) {
         }
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         const formData = {
             // create a new objebt to hold the value from states / input fields
             caption: caption,
-            image: image
+            image: await handleUploadImage() // call handleUploadImage to upload the image to firebase storage and get the download URL
         };
 
         console.log(formData);
@@ -53,6 +57,13 @@ export default function PostForm({ savePost, post }) {
             // if not, set errorMessage state.
             setErrorMessage("Please, fill in all fields.");
         }
+    }
+
+    async function handleUploadImage() {
+        const storageRef = ref(storage, imageFile.name); // create a reference to the file in firebase storage
+        await uploadBytes(storageRef, imageFile); // upload the image file to firebase storage
+        const downloadURL = await getDownloadURL(storageRef); // Get the download URL
+        return downloadURL;
     }
 
     return (
@@ -78,7 +89,9 @@ export default function PostForm({ savePost, post }) {
                     className="image-preview"
                     src={image}
                     alt="Choose"
-                    onError={event => (event.target.src = imgPlaceholder)}
+                    onError={event =>
+                        (event.target.src = imgPlaceholder)
+                    }
                 />
             </label>
             <p className="text-error">{errorMessage}</p>

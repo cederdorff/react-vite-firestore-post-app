@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // firebaseConfig object copied from project in Firebase Console
 const firebaseConfig = {
@@ -15,3 +16,6 @@ export const db = getFirestore(firebaseApp);
 
 export const usersRef = collection(db, "users"); // reference to users collection in firestore
 export const postsRef = collection(db, "posts"); // reference to posts collection in firestore
+
+// Initialize Cloud Storage and get a reference to the service
+export const storage = getStorage(firebaseApp);
