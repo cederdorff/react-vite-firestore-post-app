@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { doc, getDoc } from "@firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { usersRef } from "../firebase-config";
 import placerholder from "../assets/img/user-placeholder.jpg";
 

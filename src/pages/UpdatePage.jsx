@@ -28,10 +28,10 @@ export default function UpdatePage({ showLoader }) {
     }, [showLoader, postId]); // called every time postId changes
 
     /**
-     * handleSubmit updates and existing post based on a postId
-     * handleSubmit is called by the PostForm component
+     * updatePost updates and existing post based on a postId
+     * updatePost is called by the PostForm component
      */
-    async function handleSubmit(postToUpdate) {
+    async function updatePost(postToUpdate) {
         showLoader(true);
         const docRef = doc(postsRef, postId); // create post ref based on postId
         await updateDoc(docRef, postToUpdate); // update post using the docRef and postToUpdate object (coming from PostForm)
@@ -54,7 +54,7 @@ export default function UpdatePage({ showLoader }) {
     return (
         <section className="page">
             <h1>Update Page</h1>
-            <PostForm savePost={handleSubmit} post={post} />
+            <PostForm savePost={updatePost} post={post} />
             <button className="btn-outline" onClick={deletePost}>
                 Delete Post
             </button>
