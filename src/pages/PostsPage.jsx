@@ -10,10 +10,12 @@ export default function HomePage({ showLoader }) {
         const q = query(postsRef, orderBy("createdAt", "desc")); // order by: lastest post first
         const unsubscribe = onSnapshot(q, data => {
             showLoader(true);
-            const postsData = data.docs.map(doc => {
-                // map through all docs (object) from post collection
-                return { ...doc.data(), id: doc.id }; // changing the data structure so it's all gathered in one object
-            });
+            // map through all docs (object) from post collection
+            // changing the data structure so it's all gathered in one object
+            const postsData = data.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
             setPosts(postsData);
             showLoader(false);
         });
