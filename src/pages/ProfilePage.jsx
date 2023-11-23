@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { getAuth, signOut } from "firebase/auth";
-import { usersRef } from "../firebase-config";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
+import { getAuth, signOut } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useEffect, useState } from "react";
 import imgPlaceholder from "../assets/img/img-placeholder.jpg";
+import { storage, usersRef } from "../firebase-config";
 
 export default function ProfilePage({ showLoader }) {
     const [name, setName] = useState("");
     const [title, setTitle] = useState("");
     const [email, setEmail] = useState("");
     const [image, setImage] = useState("");
+    const [imageFile, setImageFile] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const auth = getAuth();
 
@@ -39,12 +41,23 @@ export default function ProfilePage({ showLoader }) {
         event.preventDefault();
         showLoader(true);
 
-        const userToUpdate = { name: name, title: title, image: image }; // create an object to hold the user to update properties
+        const userToUpdate = {
+            name: name,
+            title: title,
+            image: await handleUploadImage() // call handleUploadImage to upload the image to firebase storage and get the download URL
+        }; // create an object to hold the user to update properties
         console.log(userToUpdate);
         console.log(auth.currentUser.uid);
         const docRef = doc(usersRef, auth.currentUser.uid); // create reference to the user in firestore
         await updateDoc(docRef, userToUpdate); // set/update the user in firestore with the values from userToUpdate/values from input fields
         showLoader(false);
+    }
+
+    async function handleUploadImage() {
+        const storageRef = ref(storage, imageFile.name); // create a reference to the file in firebase storage
+        await uploadBytes(storageRef, imageFile); // upload the image file to firebase storage
+        const downloadURL = await getDownloadURL(storageRef); // Get the download URL
+        return downloadURL;
     }
 
     function handleSignOut() {
@@ -59,6 +72,7 @@ export default function ProfilePage({ showLoader }) {
         const file = event.target.files[0];
         if (file.size < 500000) {
             // image file size must be below 0,5MB
+            setImageFile(file); // set the imageFile state with the file object
             const reader = new FileReader();
             reader.onload = event => {
                 setImage(event.target.result);
@@ -118,7 +132,9 @@ export default function ProfilePage({ showLoader }) {
                         className="image-preview"
                         src={image}
                         alt="Choose"
-                        onError={event => (event.target.src = imgPlaceholder)}
+                        onError={event =>
+                            (event.target.src = imgPlaceholder)
+                        }
                     />
                 </label>
                 <p className="text-error">{errorMessage}</p>
