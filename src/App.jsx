@@ -4,7 +4,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Loader from "./components/Loader";
 import Nav from "./components/Nav";
 import CreatePage from "./pages/CreatePage";
-import FavoritesPage from "./pages/FavoritesPage";
 import PostsPage from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SignInPage from "./pages/SignInPage";
@@ -13,7 +12,9 @@ import UpdatePage from "./pages/UpdatePage";
 
 function App() {
     const [showLoader, setShowLoader] = useState(true); // default value of the loader is true (loader displayed)
-    const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // default value comes from localStorage
+    const [isAuth, setIsAuth] = useState(
+        localStorage.getItem("isAuth")
+    ); // default value comes from localStorage
 
     useEffect(() => {
         const auth = getAuth();
@@ -41,20 +42,22 @@ function App() {
                     element={<PostsPage showLoader={setShowLoader} />}
                 />
                 <Route
-                    path="/favorites"
-                    element={<FavoritesPage showLoader={setShowLoader} />}
-                />
-                <Route
                     path="/create"
-                    element={<CreatePage showLoader={setShowLoader} />}
+                    element={
+                        <CreatePage showLoader={setShowLoader} />
+                    }
                 />
                 <Route
                     path="/posts/:id"
-                    element={<UpdatePage showLoader={setShowLoader} />}
+                    element={
+                        <UpdatePage showLoader={setShowLoader} />
+                    }
                 />
                 <Route
                     path="/profile"
-                    element={<ProfilePage showLoader={setShowLoader} />}
+                    element={
+                        <ProfilePage showLoader={setShowLoader} />
+                    }
                 />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
