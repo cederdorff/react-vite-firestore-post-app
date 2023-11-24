@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { usersRef } from "../firebase-config";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    updateDoc
+} from "firebase/firestore";
 import imgPlaceholder from "../assets/img/img-placeholder.jpg";
 
 export default function ProfilePage({ showLoader }) {
@@ -22,6 +28,20 @@ export default function ProfilePage({ showLoader }) {
                 const docRef = doc(usersRef, auth.currentUser.uid); // use auth users uid to get user data from users collection
                 const userData = (await getDoc(docRef)).data();
                 console.log(userData);
+                const movieCollection = collection(
+                    usersRef,
+                    auth.currentUser.uid,
+                    "movies"
+                );
+
+                const movies = (
+                    await getDocs(movieCollection)
+                ).docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                console.log(movies);
                 if (userData) {
                     // if userData exists set states with values from userData (data from firestore)
                     setName(userData.name);
