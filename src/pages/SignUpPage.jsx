@@ -27,8 +27,7 @@ export default function SignUpPage({ showLoader }) {
             .then(userCredential => {
                 // Created and signed in
                 const user = userCredential.user;
-                const docRef = doc(usersRef, user.uid); // create reference to the user in firestore
-                setDoc(docRef, { name }); // set/update the user in firestore with the values from userToUpdate/values from input fields
+                createUser(user.uid); // create user in firestore
             })
             .catch(error => {
                 let code = error.code; // saving error code in variable
@@ -37,6 +36,11 @@ export default function SignUpPage({ showLoader }) {
                 code = code.replaceAll("auth/", "");
                 setErrorMessage(code);
             });
+    }
+
+    function createUser(id) {
+        const docRef = doc(usersRef, id); // create reference to the user in firestore
+        setDoc(docRef, { name }); // set/update the user in firestore with the values from userToUpdate/values from input fields
     }
 
     return (
