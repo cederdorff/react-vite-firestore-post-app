@@ -49,8 +49,6 @@ export default function ProfilePage({ showLoader }) {
             userToUpdate.image = await handleUploadImage(); // call handleUploadImage to upload the image to firebase storage and get the download URL
         }
 
-        console.log(userToUpdate);
-        console.log(auth.currentUser.uid);
         const docRef = doc(usersRef, auth.currentUser.uid); // create reference to the user in firestore
         await updateDoc(docRef, userToUpdate); // set/update the user in firestore with the values from userToUpdate/values from input fields
         showLoader(false);
