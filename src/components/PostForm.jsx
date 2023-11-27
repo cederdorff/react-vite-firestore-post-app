@@ -44,8 +44,12 @@ export default function PostForm({ savePost, post }) {
         const formData = {
             // create a new objebt to hold the value from states / input fields
             caption: caption,
-            image: await handleUploadImage() // call handleUploadImage to upload the image to firebase storage and get the download URL
+            image: image
         };
+
+        if (imageFile) {
+            formData.image = await handleUploadImage(); // call handleUploadImage to upload the image to firebase storage and get the download URL
+        }
 
         console.log(formData);
 
