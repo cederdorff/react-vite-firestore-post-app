@@ -51,8 +51,6 @@ export default function PostForm({ savePost, post }) {
             formData.image = await handleUploadImage(); // call handleUploadImage to upload the image to firebase storage and get the download URL
         }
 
-        console.log(formData);
-
         const validForm = formData.caption && formData.image; // will return false if one of the properties doesn't have a value
         if (validForm) {
             // if all fields/ properties are filled, then call savePost
