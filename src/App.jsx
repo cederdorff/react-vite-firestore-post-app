@@ -30,6 +30,14 @@ function App() {
         });
     }, []);
 
+    function ProtectedRoute({ children }) {
+        if (isAuth) {
+            return children;
+        } else {
+            return <Navigate to="/sign-in" />;
+        }
+    }
+
     return (
         <main>
             {showLoader && <Loader />} {/* if showLoader is true, display the loader */}
@@ -38,7 +46,11 @@ function App() {
                 <Route
                     path="/"
                     // if isAuth is true, display the PostsPage, else redirect to sign-in
-                    element={isAuth ? <PostsPage showLoader={setShowLoader} /> : <Navigate to="/sign-in" />}
+                    element={
+                        <ProtectedRoute>
+                            <PostsPage showLoader={setShowLoader} />
+                        </ProtectedRoute>
+                    }
                 />
                 <Route
                     path="/create"
