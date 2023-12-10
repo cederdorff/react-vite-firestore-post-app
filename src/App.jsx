@@ -12,9 +12,7 @@ import UpdatePage from "./pages/UpdatePage";
 
 function App() {
     const [showLoader, setShowLoader] = useState(true); // default value of the loader is true (loader displayed)
-    const [isAuth, setIsAuth] = useState(
-        localStorage.getItem("isAuth")
-    ); // default value comes from localStorage
+    const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // default value comes from localStorage
 
     useEffect(() => {
         const auth = getAuth();
@@ -37,28 +35,10 @@ function App() {
         <>
             <Nav />
             <Routes>
-                <Route
-                    path="/"
-                    element={<PostsPage showLoader={setShowLoader} />}
-                />
-                <Route
-                    path="/create"
-                    element={
-                        <CreatePage showLoader={setShowLoader} />
-                    }
-                />
-                <Route
-                    path="/posts/:id"
-                    element={
-                        <UpdatePage showLoader={setShowLoader} />
-                    }
-                />
-                <Route
-                    path="/profile"
-                    element={
-                        <ProfilePage showLoader={setShowLoader} />
-                    }
-                />
+                <Route path="/" element={<PostsPage showLoader={setShowLoader} />} />
+                <Route path="/create" element={<CreatePage showLoader={setShowLoader} />} />
+                <Route path="/posts/:id" element={<UpdatePage showLoader={setShowLoader} />} />
+                <Route path="/profile" element={<ProfilePage showLoader={setShowLoader} />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </>
@@ -67,14 +47,8 @@ function App() {
     // variable holding all public routes without nav bar
     const publicRoutes = (
         <Routes>
-            <Route
-                path="/sign-in"
-                element={<SignInPage showLoader={setShowLoader} />}
-            />
-            <Route
-                path="/sign-up"
-                element={<SignUpPage showLoader={setShowLoader} />}
-            />
+            <Route path="/sign-in" element={<SignInPage showLoader={setShowLoader} />} />
+            <Route path="/sign-up" element={<SignUpPage showLoader={setShowLoader} />} />
             <Route path="*" element={<Navigate to="/sign-in" />} />
         </Routes>
     );
